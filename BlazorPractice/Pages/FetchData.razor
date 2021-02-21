@@ -1,7 +1,9 @@
 ﻿@page "/fetchdata"
 
 @using BlazorPractice.Data
+
 @inject WeatherForecastService ForecastService
+@inject CommonService CommonService
 
 <h1>Weather forecast</h1>
 
@@ -9,7 +11,7 @@
 
 @if (forecasts == null)
 {
-    <p><em>Loading...</em></p>
+    <LoadingSpinner />
 }
 else
 {
@@ -41,6 +43,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await Task.Run(() => CommonService.SetLoadingTime(2000));
         forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
     }
 }

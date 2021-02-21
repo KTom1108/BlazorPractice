@@ -26,9 +26,26 @@ namespace BlazorPractice
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+            services.AddLocalization(option => option.ResourcesPath = "Resources");
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<CommonService>();
+        }
+
+        private RequestLocalizationOptions GetLocalizationOption()
+        {
+            var cultures = Configuration.GetSection("Cultures")
+                .GetChildren().ToDictionary(x => x.Key, x => x.Value);
+
+            var supportedCultures = cultures.Keys.ToArray();
+
+            var localizationOption = new RequestLocalizationOptions()
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+
+            return localizationOption;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,10 +65,13 @@ namespace BlazorPractice
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseRequestLocalization(GetLocalizationOption());
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
