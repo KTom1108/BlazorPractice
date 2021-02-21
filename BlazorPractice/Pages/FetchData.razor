@@ -1,8 +1,5 @@
 ﻿@page "/fetchdata"
 
-@using BlazorPractice.Data
-
-@inject WeatherForecastService ForecastService
 @inject CommonService CommonService
 
 <h1>Weather forecast</h1>
@@ -41,9 +38,25 @@ else
 @code {
     private WeatherForecast[] forecasts;
 
+    private static readonly string[] Summaries = new[]
+    {
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
+
     protected override async Task OnInitializedAsync()
     {
         await Task.Run(() => CommonService.SetLoadingTime(2000));
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+        forecasts = await GetForecastAsync(DateTime.Now);
+    }
+
+    public Task<WeatherForecast[]> GetForecastAsync(DateTime startDate)
+    {
+        var rng = new Random();
+        return Task.FromResult(Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        {
+            Date = startDate.AddDays(index),
+            TemperatureC = rng.Next(-20, 55),
+            Summary = Summaries[rng.Next(Summaries.Length)]
+        }).ToArray());
     }
 }

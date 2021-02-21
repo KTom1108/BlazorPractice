@@ -1,8 +1,29 @@
 ﻿@page "/"
-@inject IStringLocalizer<App> Localizer
 
-<h1>@Localizer["Hello Blazor"] </h1>
+@inject NavigationManager NavigationManager
+@inject CommonService CommonService
+@inject HttpClient Http
 
-@Localizer["Welcome"]
+@if (dicTranslated != null)
+{
+    <h1>@dicTranslated["Hello Blazor"] </h1>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    @dicTranslated["Welcome"]
+
+    <SurveyPrompt Title="How is Blazor working for you?" />
+}
+else { 
+     <LoadingSpinner/>
+}
+
+@code{
+    private Dictionary<string, string> dicTranslated;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var query = $"?culture={Uri.EscapeDataString(CommonService.selectedCulture)}&";
+        dicTranslated = await Http.GetJsonAsync<Dictionary<string, string>>(NavigationManager.Uri
+            + "api/Translate/GetTranslatedDictionary" + query);
+    }
+
+}

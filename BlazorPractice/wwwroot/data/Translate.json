@@ -1,0 +1,95 @@
+﻿{
+  "translateList": [
+    {
+      "sentence": "Hello Blazor",
+      "translate": "こんにちはブレイザー",
+      "culture": "ja-JP"
+    },
+    {
+      "sentence": "Japan",
+      "translate": "日本",
+      "culture": "ja-JP"
+    },
+    {
+      "sentence": "Korea",
+      "translate": "韓国",
+      "culture": "ja-JP"
+    },
+    {
+      "sentence": "Language",
+      "translate": "言語",
+      "culture": "ja-JP"
+    },
+    {
+      "sentence": "USA",
+      "translate": "米国",
+      "culture": "ja-JP"
+    },
+    {
+      "sentence": "Welcome",
+      "translate": "ようこそ",
+      "culture": "ja-JP"
+    },
+
+    {
+      "sentence": "Hello Blazor",
+      "translate": "안녕 블레이저",
+      "culture": "ko-KR"
+    },
+    {
+      "sentence": "Japan",
+      "translate": "일본",
+      "culture": "ko-KR"
+    },
+    {
+      "sentence": "Korea",
+      "translate": "대한민국",
+      "culture": "ko-KR"
+    },
+    {
+      "sentence": "Language",
+      "translate": "언어",
+      "culture": "ko-KR"
+    },
+    {
+      "sentence": "USA",
+      "translate": "미국",
+      "culture": "ko-KR"
+    },
+    {
+      "sentence": "Welcome",
+      "translate": "환영합니다",
+      "culture": "ko-KR"
+    },
+    {
+      "sentence": "Hello Blazor",
+      "translate": "Hello Blazor",
+      "culture": "es-US"
+    },
+    {
+      "sentence": "Japan",
+      "translate": "Japan",
+      "culture": "es-US"
+    },
+    {
+      "sentence": "Korea",
+      "translate": "Korea",
+      "culture": "es-US"
+    },
+    {
+      "sentence": "Language",
+      "translate": "Language",
+      "culture": "es-US"
+    },
+    {
+      "sentence": "USA",
+      "translate": "USA",
+      "culture": "es-US"
+    },
+    {
+      "sentence": "Welcome",
+      "translate": "Welcome",
+      "culture": "es-US"
+    }
+  ]
+}

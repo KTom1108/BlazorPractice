@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorPractice.Controllers
 {
-    [Route("[controller]/[action]")]
+    [Route("api/[controller]/[action]")]
     public class CultureController : Controller
     {
         public IActionResult Index()
@@ -22,4 +22,5 @@ namespace BlazorPractice.Controllers
             return LocalRedirect(redirectUri);
         }
     }
+
 }

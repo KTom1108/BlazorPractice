@@ -1,47 +1,54 @@
 ﻿@inject NavigationManager NavigationManager
 @inject IConfiguration Configuration
-@inject IStringLocalizer<App> Localizer
+@inject HttpClient Http
+@inject CommonService CommonService
 
-@if (cultures != null)
+@if (cultures != null && dicTranslated != null)
 {
 <form class="form-inline">
     <select class="form-control mr-2" @onchange="RequestCultureChange">
         @foreach (var culture in cultures)
         {
-            if (selectedCulture.Equals(@culture.Key))
+            if (CommonService.selectedCulture.Equals(@culture.Key))
             {
-                <option value="@culture.Key" selected>@Localizer[culture.Value]</option>
+                <option value="@culture.Key" selected>@dicTranslated[culture.Value]</option>
             }
             else
             {
-                <option value="@culture.Key">@Localizer[culture.Value]</option>
+                <option value="@culture.Key">@dicTranslated[culture.Value]</option>
             }
-
         }
     </select>
-
-</form>}
-
+</form>
+}
+else { 
+    <LoadingSpinner/>
+}
 @code { 
-    private string selectedCulture = Thread.CurrentThread.CurrentCulture.Name;
-    private Dictionary<string, string> cultures;
 
-    protected override void OnInitialized()
+    private Dictionary<string, string> cultures;
+    private Dictionary<string, string> dicTranslated;
+
+    protected override async Task OnInitializedAsync()
     {
         cultures = Configuration.GetSection("Cultures")
-            .GetChildren().ToDictionary(x => x.Key, x => x.Value);
+           .GetChildren().ToDictionary(x => x.Key, x => x.Value);
+
+        var query = $"?culture={Uri.EscapeDataString(CommonService.selectedCulture)}&";
+        dicTranslated = await Http.GetJsonAsync<Dictionary<string, string>>(NavigationManager.Uri
+            + "api/Translate/GetTranslatedDictionary" + query);
     }
 
     protected void RequestCultureChange(ChangeEventArgs e)
     {
-        selectedCulture = e.Value.ToString();
+        CommonService.selectedCulture = e.Value.ToString();
 
         var uri = new Uri(NavigationManager.Uri)
         .GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
 
-        var query = $"?culture={Uri.EscapeDataString(selectedCulture)}&"
+        var query = $"?culture={Uri.EscapeDataString(CommonService.selectedCulture)}&"
             + $"redirectUri={Uri.EscapeDataString(uri)}";
 
-        NavigationManager.NavigateTo("/Culture/SetCulture" + query, forceLoad: true);
-    } 
+        NavigationManager.NavigateTo("/api/Culture/SetCulture" + query, forceLoad: true);
+    }
 }

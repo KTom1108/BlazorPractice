@@ -1,18 +1,36 @@
 ﻿@inherits LayoutComponentBase
 
-@inject IStringLocalizer<App> Localizer
+@inject NavigationManager NavigationManager
+@inject CommonService CommonService
+@inject HttpClient Http
 
-<div class="sidebar">
-    <NavMenu />
-</div>
-
-<div class="main">
-    <div class="top-row px-4">
-        <span class="pr-2">@Localizer["Language"]</span><LanguageSelectBox />
-        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+@if (dicTranslated != null)
+{    
+    <div class="sidebar">
+        <NavMenu />
     </div>
+    <div class="main">
+        <div class="top-row px-4">
+            <span class="pr-2">@dicTranslated["Language"]</span><LanguageSelectBox />
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
 
-    <div class="content px-4">
-        @Body
+        <div class="content px-4">
+            @Body
+        </div>
     </div>
-</div>
+}
+else { 
+    <LoadingSpinner/>
+}
+
+@code { 
+    private Dictionary<string, string> dicTranslated;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var query = $"?culture={Uri.EscapeDataString(CommonService.selectedCulture)}&";
+        dicTranslated = await Http.GetJsonAsync<Dictionary<string, string>>(NavigationManager.Uri
+            + "api/Translate/GetTranslatedDictionary" + query);
+    } 
+}
