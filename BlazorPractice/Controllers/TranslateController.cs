@@ -13,13 +13,13 @@ namespace BlazorPractice.Controllers
 
         [HttpGet]
         public Dictionary<string, string> GetTranslatedDictionary(string culture)
-        {           
+        {
             var txtTranslate = System.IO.File.ReadAllText(Path);
-            TranslateList model = JsonSerializer.Deserialize<TranslateList>(txtTranslate);
+            var model = JsonSerializer.Deserialize<List<Translate>>(txtTranslate);
 
-            return model.translateList
+            return model
                 .Where(x => x.culture == culture)
-                .ToDictionary(x => x.sentence, x => x.translate); 
+                .ToDictionary(x => x.sentence, x => x.translated); 
         }
     }
 }

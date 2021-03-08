@@ -1,0 +1,42 @@
+﻿[
+  {
+    "no": "1",
+    "title": "Home",
+    "depth": "1",
+    "order": "1",
+    "icon": "",
+    "memo": ""
+  },
+  {
+    "no": "2",
+    "title": "Counter",
+    "depth": "1",
+    "order": "2",
+    "icon": "",
+    "memo": ""
+  },
+  {
+    "no": "3",
+    "title": "Fetch data",
+    "depth": "1",
+    "order": "3",
+    "icon": "",
+    "memo": ""
+  },
+  {
+    "no": "4",
+    "title": "Translate Management",
+    "depth": "1",
+    "order": "4",
+    "icon": "",
+    "memo": ""
+  },
+  {
+    "no": "5",
+    "title": "Menu Management",
+    "depth": "1",
+    "order": "5",
+    "icon": "",
+    "memo": ""
+  }
+]
